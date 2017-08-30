@@ -12,8 +12,8 @@ Members
 1. Domer McDomerson (dmcdomer@nd.edu)
 2. Belle Fleur (bfleur@nd.edu)
 
-Design and Implementation
--------------------------
+Design
+------
 
 > Explain how you would periodically scan the `root` the directory and detect
 > if a file has been created, modified, or removed.
@@ -32,6 +32,12 @@ Design and Implementation
 >
 >   2. What information would you need to store and what data structures would
 >      you need?
+
+Testing
+-------
+
+> Describe how you tested and verified that `rorschach` met the project
+> requirements.
 
 Analysis
 --------
