@@ -65,6 +65,7 @@ Analysis
 >   3. Why might we still consider using [busy waiting] as specified in the
 >      original design rather than use something like [inotify(7)]?
 
+[Linux]:        https://kernel.org
 [busy waiting]: https://en.wikipedia.org/wiki/Busy_waiting
 [system call]:  https://en.wikipedia.org/wiki/System_call
 [inotify(7)]:   http://man7.org/linux/man-pages/man7/inotify.7.html
