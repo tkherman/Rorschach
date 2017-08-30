@@ -25,13 +25,12 @@ Design
 
 .
 
-> Explain how you would execute a task for each event while limiting to total
-> number of concurrent processes to the specified limit?
+> Explain how you would check if a rule matched an event and execute the
+> corresponding action.
 >
 >   1. What system calls would you need to use?
 >
->   2. What information would you need to store and what data structures would
->      you need?
+>   2. How would you pass the environment variables to the command?
 
 Testing
 -------
@@ -43,12 +42,6 @@ Analysis
 --------
 
 > How is what `rorschach` does similar to how a [system call] operates?
-
-.
-
-> What happens when the number actions require is much larger than the process
-> limit?  That is, how does your program behave when many tasks need to be
-> executed?  How does the program scale?
 
 .
 
