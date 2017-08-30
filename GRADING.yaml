@@ -16,3 +16,5 @@ Miscellaneous:          3
   - Contribution:       2       # Individual contributed to both source code and documentation
 
 Extra Credit:           2       # Extra credit implementation
+  - Concurrency:        1       # Implement concurrency
+  - INotify             1       # Utilize inotify
