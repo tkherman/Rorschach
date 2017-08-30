@@ -60,7 +60,7 @@ Analysis
 >      original design rather than use something like [inotify(7)]?
 
 [busy waiting]: https://en.wikipedia.org/wiki/Busy_waiting
-[system call]:  http://man7.org/linux/man-pages/man7/inotify.7.html
+[system call]:  https://en.wikipedia.org/wiki/System_call
 [inotify(7)]:   http://man7.org/linux/man-pages/man7/inotify.7.html
 
 Errata
@@ -72,6 +72,3 @@ Extra Credit
 ------------
 
 > Describe what extra credit (if any) that you implemented.
-
-Comments
---------
