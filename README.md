@@ -32,6 +32,15 @@ Design
 >
 >   2. How would you pass the environment variables to the command?
 
+.
+
+> Explain how you would handle a [SIGINT] signal and what you would need to
+> cleanup?
+>
+>   1. What system calls would you need to use?
+>
+>   2. How would you know what resources to cleanup?
+
 Testing
 -------
 
