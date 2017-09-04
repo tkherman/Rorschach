@@ -9,8 +9,8 @@ This is the documentation for [Project 01] of [CSE.30341.FA17].
 Members
 -------
 
-1. Domer McDomerson (dmcdomer@nd.edu)
-2. Belle Fleur (bfleur@nd.edu)
+1. Herman Tong (ktong1@nd.edu)
+2. John McGuinness (jmcguin1@nd.edu)
 
 Design
 ------
@@ -20,8 +20,26 @@ Design
 >
 >   1. What system calls would you need to use?
 >
+>       opendir
+>           - to open the directory
+>       readdir
+>           - read files inside the directory
+>       stat
+>           - use to check the modified time of the file
+        closedir
+            - to close the directory when finished
+>
 >   2. What information would you need to store and what data structures would
 >      you need?
+>
+>       We will need to track existing files and their modified time for
+>       detecting created and modified. For detecting removed, we simply need to
+>       store the number of files we are keeping track of.
+>
+>       To do that, we will use std::unorderd_map with the key being the full
+>       path to the file and value being the last modified time. This allow us
+>       to have O(1) access time when checking the stored information
+
 
 .
 
@@ -30,7 +48,27 @@ Design
 >
 >   1. What system calls would you need to use?
 >
+>       To keep check if something has been deleted, simply check if the total number
+>       of files is the same as the number from the previous scan.
+>
+>       To check for created, try to access the std::unordered_map with the filename
+>       from the current scan. If there's no element with the filename, it means
+>       the file.
+>
+>       To check for modified, simply look up the filename in the
+>       std::unorderd_map. If the name differs from the st_mtime, then it has
+>       been modified.
+>       
+>       To execute the corresponding action, we will use fork() to create a new
+>       process and use exec() in the child process to execute the action.
+>
 >   2. How would you pass the environment variables to the command?
+>
+>       We will simply pass the environment variables as a function variable.
+>       Then in the execute function that will handle forking and actual
+>       executing of the action, we will use setenv() to set the environment
+>       variable. Since the child process get the same environment variables, the
+>       child process should be able to access them.
 
 .
 
@@ -39,8 +77,15 @@ Design
 >
 >   1. What system calls would you need to use?
 >
+>       signal()
+>           - the signal function takes 2 arguments, first is the signal number
+>             and second is a function that would handle the signal
+>
 >   2. How would you know what resources to cleanup?
-
+>       
+>       We will need to free up any dynamically allocated structs such as the
+>       structs we'll use to keep the rules.  We will also need to free any
+        dynamicaly alocated strings.
 Testing
 -------
 
