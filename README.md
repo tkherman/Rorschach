@@ -126,3 +126,8 @@ Extra Credit
 ------------
 
 > Describe what extra credit (if any) that you implemented.
+
+Grader
+------
+
+- Kyle Gifaldi (kgifaldi@nd.edu)
