@@ -6,6 +6,8 @@
 
 #include "rorschach.h"
 
-umap<string, rule> loadRules(string filepath);
+umap<string, vector<rule>> loadRules(const string filepath);
+bool isValid(string, string, string);
+void msgExit(string);
 
 #endif

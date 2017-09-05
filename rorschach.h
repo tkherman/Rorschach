@@ -4,6 +4,7 @@
 #define RORSCHACH_H
 
 #include <string>
+#include <vector>
 #include <unordered_map>
 using namespace std;
 
@@ -32,12 +33,11 @@ struct fileInfo {
     bool visited;
 };
 
-int scan(const string root, int frequency, const umap<string, rule> & rules);
-int detect(const string filename, umap<string, fileinfo> & fileMap,
-           const umap<string, rule> & rules);
-int detectDelete(umap<string, fileinfo> & fileMap);
-int execute(const string filename, const umap<string, rule> & rules);
-umap<string, rule> parseRules(const string ruleFile);
+int scan(const string root, int frequency, const umap<string, vector<rule>> & rules);
+int detect(const string filename, umap<string, fileInfo> & fileMap,
+           const umap<string, vector<rule>> & rules);
+int detectDelete(umap<string, fileInfo> & fileMap);
+int execute(const string filename, const umap<string, vector<rule>> & rules);
 void signalHandler(int sig);
 
 #endif
