@@ -38,3 +38,4 @@ int detect(const string filename, umap<string, fileinfo> & fileMap,
 int detectDelete(umap<string, fileinfo> & fileMap);
 int execute(const string filename, const umap<string, rule> & rules);
 umap<string, rule> parseRules(const string ruleFile);
+void signalHandler(int sig);
