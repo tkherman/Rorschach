@@ -13,7 +13,8 @@
 
 /* This function parse the rules in the given file and store them in a
  * unordered_map which is return to main() 
- * If any of the rules are invalid, it will return an empty unordered_map*/
+ * If any of the rules are invalid, it will return an empty unordered_map
+ * so the main function will know the exit program*/
 umap<string, vector<rule>> loadRules(const string filepath) {
     
     /* Initialize the unordered_map */
