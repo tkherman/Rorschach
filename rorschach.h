@@ -26,6 +26,11 @@ template<typename Key, typename Value>
 struct rule {
     string pattern;
     string action;
+
+    rule(string pattern, string action) {
+        this->pattern = pattern;
+        this->action = action;
+    }
 };
 
 struct fileInfo {
@@ -38,6 +43,7 @@ int detect(const string filename, umap<string, fileInfo> & fileMap,
            const umap<string, vector<rule>> & rules);
 int detectDelete(umap<string, fileInfo> & fileMap);
 int execute(const string filename, const umap<string, vector<rule>> & rules);
+umap<string, vector<rule>> loadRules(string ruleFile);
 void signalHandler(int sig);
 
 #endif
