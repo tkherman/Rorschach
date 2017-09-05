@@ -95,7 +95,13 @@ int main(int argc, char *argv[]) {
         log("Error: please provide a root directory for scanning");
         usage(programName, 1);
 
-    } 
+    }
+
+
+    /* Parse rules file and begin scanning */
+
+    umap<string, vector<rule>> rules = parseRules(ruleFile);
+
+    scan(root, frequency, rules);
     
-    cout << "rules: " << ruleFile << ", frequency: " << frequency << ", root: " << root << endl;
 }
