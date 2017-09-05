@@ -30,12 +30,14 @@ struct rule {
 struct fileInfo {
     time_t mtime; // last modified time
     bool visited;
-}
+};
 
 int scan(const string root, int frequency, const umap<string, rule> & rules);
-int detect(const string filename, umap<string, fileinfo> & fileMap,
+int detect(const string filename, umap<string, fileInfo> & fileMap,
            const umap<string, rule> & rules);
-int detectDelete(umap<string, fileinfo> & fileMap);
+int detectDelete(umap<string, fileInfo> & fileMap);
 int execute(const string filename, const umap<string, rule> & rules);
 umap<string, rule> parseRules(const string ruleFile);
 void signalHandler(int sig);
+
+#endif
