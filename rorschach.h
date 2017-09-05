@@ -30,7 +30,7 @@ struct rule {
 struct fileInfo {
     time_t mtime; // last modified time
     bool visited;
-}
+};
 
 int scan(const string root, int frequency, const umap<string, rule> & rules);
 int detect(const string filename, umap<string, fileinfo> & fileMap,
