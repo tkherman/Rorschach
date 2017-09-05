@@ -3,6 +3,8 @@
 #include "rorschach.h"
 
 #include <cstdlib>
+#include <cctype>
+#include <cstring>
 
 #include <iostream>
 
@@ -10,6 +12,7 @@
 /* Functions */
 
 void usage(const string programName, int status) {
+    cerr << endl;
     cerr << "Usage: " << programName << " [options] ROOT" << endl;
     cerr << endl;
     cerr << "Options:" << endl;
@@ -18,6 +21,13 @@ void usage(const string programName, int status) {
     cerr << "   -t SECONDS      Time between scans (default is 5 seconds)" << endl;
 
     exit(status);
+}
+
+bool isNumber(char* s) {
+    for (int i = 0; i < strlen(s); i++)
+        if (!isdigit(s[i])) return false;
+
+    return true;
 }
 
 
@@ -30,7 +40,9 @@ int main(int argc, char *argv[]) {
     int frequency = 5;
     string root;
 
+
     /* Parse command line arguments */
+
     string programName = argv[0];
 
     if (argc < 2)
@@ -39,7 +51,7 @@ int main(int argc, char *argv[]) {
 
     int argind = 1;
 
-    while (argind < argc) {
+    while (argind < argc - 1) {
         string arg = argv[argind++];
 
         if (!arg.compare("-h")) {
@@ -54,24 +66,36 @@ int main(int argc, char *argv[]) {
             }
 
         } else if (!arg.compare("-t")) {
-            if (argind < argc) {
+            if ((argind < argc) && isNumber(argv[argind])) {
                 frequency = atoi(argv[argind++]);
+            
+            } else if ((argind < argc) && !isNumber(argv[argind])) {
+                log("Error: -t requires an integer as argument");
+                usage(programName, 1);
+            
             } else {
                 log("Error: -t requires another argument for time in seconds");
                 usage(programName, 1);
             }
 
         } else {
-            if (argind == argc) {
-                root = arg;
-            
-            } else {
-                log("Error: please only provide one root directory for scanning");
-                usage(programName, 1);
-            }
+            log("Error: invalid argument %s", arg.c_str());
+            usage(programName, 1);
 
         }
     }
+    
 
+    /* Get the root directory */
+
+    if ((argind + 1 == argc) && argv[argind][0] != '-') {
+        root = argv[argind];
+    
+    } else {
+        log("Error: please provide a root directory for scanning");
+        usage(programName, 1);
+
+    } 
+    
     cout << "rules: " << ruleFile << ", frequency: " << frequency << ", root: " << root << endl;
 }
