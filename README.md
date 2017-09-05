@@ -32,13 +32,18 @@ Design
 >   2. What information would you need to store and what data structures would
 >      you need?
 >
->       We will need to track existing files and their modified time for
->       detecting created and modified. For detecting removed, we simply need to
->       store the number of files we are keeping track of.
+>       We will need to track existing filer, their modified time for
+>       detecting created and modified. For detecting removed, we will need to
+>       keep track if we have visited all file at each scan. If not, the files
+>       not visited are deleted
 >
 >       To do that, we will use std::unorderd_map with the key being the full
->       path to the file and value being the last modified time. This allow us
->       to have O(1) access time when checking the stored information
+>       path to the file and the value will keep track of the modified time and
+>       whether the file has been visited. This allow us
+>       to have O(1) access time when checking the stored information. Then
+>       after checking each file, we will scan through the entire unordered_map
+>       and the entry that hasn't been visited is deleted.
+>
 
 
 .
@@ -131,3 +136,10 @@ Grader
 ------
 
 - Kyle Gifaldi (kgifaldi@nd.edu)
+
+
+
+
+
+Reminders
+- cite project01 from system for macros
