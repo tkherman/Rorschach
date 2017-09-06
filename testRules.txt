@@ -2,5 +2,5 @@
 
 #MODIFY  *.c         cc -o ${BASEPATH} ${FULLPATH}
 #MODIFY  sa
-#MODIFY  *.c         cc -o ${BASEPATH} ${FULLPATH}
-YOLO *.c cc -o abc
+MODIFY  *.c         cc -o ${BASEPATH} ${FULLPATH}
+#YOLO *.c cc -o abc

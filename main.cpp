@@ -100,8 +100,9 @@ int main(int argc, char *argv[]) {
 
     /* Parse rules file and begin scanning */
 
-    umap<string, vector<rule>> rules = parseRules(ruleFile);
+    umap<string, vector<rule>> rules = loadRules(ruleFile);
 
-    scan(root, frequency, rules);
+    cout << rules["MODIFY"][0].pattern << "," << rules["MODIFY"][0].action << endl;
+    //scan(root, frequency, rules);
     
 }
