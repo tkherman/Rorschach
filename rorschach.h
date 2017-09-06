@@ -15,7 +15,7 @@ using namespace std;
 #define     debug(M, ...) \
     fprintf(stderr, "DEBUG %s:%d:%s: " M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
 #define     log(M, ...) \
-    fprintf(stderr, "LOG %s:%d:%s: " M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
+    fprintf(stderr, "LOG %s: " M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
 
 
 /* typedef */
