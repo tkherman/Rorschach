@@ -7,6 +7,8 @@
 #include <vector>
 #include <unordered_map>
 #include <iostream>
+
+#include <cstring>
 using namespace std;
 
 
@@ -37,9 +39,15 @@ struct rule {
 struct fileInfo {
     time_t mtime; // last modified time
     bool visited;
+
+    fileInfo(time_t mtime, bool visited) {
+        this->mtime = mtime;
+        this->visited = visited;
+    }
 };
 
 int scan(const string root, int frequency, const umap<string, vector<rule>> & rules);
+time_t getMTime(const string filename);
 int detect(const string filename, umap<string, fileInfo> & fileMap,
            const umap<string, vector<rule>> & rules);
 int detectDelete(umap<string, fileInfo> & fileMap);

@@ -74,8 +74,6 @@ umap<string, vector<rule>> loadRules(const string filepath) {
 		
 	}
     
-    cout << ruleMap["MODIFY"][0].pattern << endl;
-
     log("Rules are successfully parsed and loaded from file");
 
 	return ruleMap;
