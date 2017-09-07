@@ -73,5 +73,13 @@ int scan(const string root, int frequency, const umap<string, vector<rule>> & ru
     log("   scanning root directory every " << frequency << " seconds");
     while (true) {
         recursiveScan(root, rules, fileMap, false);
+
+        /* Detect if there's any deletion */
+        for (auto ent : fileMap) {
+            if (ent->second.visited == false) {
+                execute(ent->first, "DELETE", rules);
+                fileMap.erase(ent);
+            }
+        }
     }
 }
