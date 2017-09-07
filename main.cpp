@@ -103,6 +103,6 @@ int main(int argc, char *argv[]) {
     umap<string, vector<rule>> rules = loadRules(ruleFile);
 
     cout << rules["MODIFY"][0].pattern << "," << rules["MODIFY"][0].action << endl;
-    //scan(root, frequency, rules);
+    scan(root, frequency, rules);
     
 }
