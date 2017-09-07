@@ -24,7 +24,7 @@ void usage(const string programName, int status) {
 }
 
 bool isNumber(char* s) {
-    for (int i = 0; i < strlen(s); i++)
+    for (size_t i = 0; i < strlen(s); i++)
         if (!isdigit(s[i])) return false;
 
     return true;
@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
             }
 
         } else {
-            log("Error: invalid argument %s", arg.c_str());
+            log("Error: invalid argument " << arg)
             usage(programName, 1);
 
         }

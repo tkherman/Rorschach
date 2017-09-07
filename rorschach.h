@@ -6,16 +6,17 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <iostream>
 using namespace std;
 
 
 /* Macros */
 
 #define streq(s0, s1) (strcmp((s0), (s1)) == 0)
-#define     debug(M, ...) \
-    fprintf(stderr, "DEBUG %s:%d:%s: " M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
-#define     log(M, ...) \
-    fprintf(stderr, "LOG %s: " M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
+#define     debug(M) \
+    cerr << "[DEBUG] " << __FILE__ << ":" << __LINE__ << ":" << __func__ << ": " << M << endl;
+#define     log(M) \
+    cerr << "[LOG] " << __func__ << ": " << M << endl;
 
 
 /* typedef */
