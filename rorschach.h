@@ -29,7 +29,8 @@ template<typename Key, typename Value>
 struct rule {
     string pattern;
     string action;
-
+    
+    rule() {}
     rule(string pattern, string action) {
         this->pattern = pattern;
         this->action = action;
@@ -40,6 +41,7 @@ struct fileInfo {
     time_t mtime; // last modified time
     bool visited;
 
+    fileInfo() {}
     fileInfo(time_t mtime, bool visited) {
         this->mtime = mtime;
         this->visited = visited;

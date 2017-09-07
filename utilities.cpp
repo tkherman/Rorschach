@@ -1,4 +1,4 @@
-/* utilities.c */
+/* utilities.cpp */
 
 #include "rorschach.h"
 
@@ -15,7 +15,7 @@ time_t getMTime(const string filename) {
     // lstat should returns 0 if successful
     if (!status) return s.st_mtime;
     else {
-        log("Error: " << sttrerror(errno));
+        log("Error: " << strerror(errno));
         exit(EXIT_FAILURE);
     
     }
