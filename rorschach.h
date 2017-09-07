@@ -52,8 +52,8 @@ int scan(const string root, int frequency, const umap<string, vector<rule>> & ru
 time_t getMTime(const string filename);
 int detect(const string filename, umap<string, fileInfo> & fileMap,
            const umap<string, vector<rule>> & rules);
-int detectDelete(umap<string, fileInfo> & fileMap);
-int execute(const string filename, const umap<string, vector<rule>> & rules);
+int detectDelete(umap<string, fileInfo> & fileMap, const umap<string, vector<rule>> & rules);
+int execute(const string filename, const string event, const umap<string, vector<rule>> & rules);
 umap<string, vector<rule>> loadRules(string ruleFile);
 void signalHandler(int sig);
 

@@ -1,4 +1,4 @@
-#ssfdja sdf als
+#sfdja sdf als
 
 #MODIFY  *.c         cc -o ${BASEPATH} ${FULLPATH}
 #MODIFY  sa

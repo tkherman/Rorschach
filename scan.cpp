@@ -82,5 +82,13 @@ int scan(const string root, int frequency, const umap<string, vector<rule>> & ru
 		usleep(5*1000000);
 		debug("begin of scan");
         recursiveScan(root, rules, fileMap, false);
+
+        /* Detect if there's any deletion */
+        for (auto ent : fileMap) {
+            if (ent->second.visited == false) {
+                execute(ent->first, "DELETE", rules);
+                fileMap.erase(ent);
+            }
+        }
     }
 }
