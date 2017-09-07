@@ -1,11 +1,12 @@
 /* scan.cpp */
 
-/* This file contails the main fuctions that carries out the scanning of the
+/* This file contains the main fuctions that carries out the scanning of the
  * directory to be monitored */
 
 #include "rorschach.h"
 
 #include <dirent.h>
+#include <unistd.h>
 #include <cstdlib>
 
 #include <string>
@@ -30,29 +31,35 @@ int recursiveScan(const string root, const umap<string, vector<rule>> & rules,
 
             
             string filename = root + "/" + string(dp->d_name);
-            debug(filename);
+            //debug(filename);
 
             /* If it's first scan, simply add filename to umap */
             if (firstScan) {
-                if (dp->d_type == DT_DIR)
+                if (dp->d_type == DT_DIR) {
                     recursiveScan(filename, rules, fileMap, true);
                 
-                else {
+                } else {
                     fileInfo info(getMTime(filename), false);
                     fileMap[filename] = info;
                 }
             /* Repeating scan, call detect for all file while recursing on directories */
             } else {
-                if (dp->d_type == DT_DIR)
+                if (dp->d_type == DT_DIR) {
                     recursiveScan(filename, rules, fileMap, false);
-                log("Scanning");
-
-                //else {
-                //    detect(filename, fileMap, rules);
-                //}
+                //log("Scanning");
+				}else {
+                    detect(filename, fileMap, rules);
+                }
             }
         }
-    }
+    } else {
+		debug("failed to open directory");
+		fprintf(stderr, "Error: Failed to open directory\n");
+		exit(EXIT_FAILURE);
+	}
+
+	closedir(dir);
+	return 0;
 }
 
 
@@ -72,6 +79,8 @@ int scan(const string root, int frequency, const umap<string, vector<rule>> & ru
     log("Beginning perodic scan:");
     log("   scanning root directory every " << frequency << " seconds");
     while (true) {
+		usleep(5*1000000);
+		debug("begin of scan");
         recursiveScan(root, rules, fileMap, false);
     }
 }
