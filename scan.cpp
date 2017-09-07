@@ -83,12 +83,18 @@ int scan(const string root, int frequency, const umap<string, vector<rule>> & ru
 		debug("begin of scan");
         recursiveScan(root, rules, fileMap, false);
 
-        /* Detect if there's any deletion */
-        for (auto ent : fileMap) {
+        
+		/* Detect if there's any deletion */
+		
+        for (auto ent = fileMap.begin(); ent != fileMap.end(); ent++) {
             if (ent->second.visited == false) {
-                execute(ent->first, "DELETE", rules);
+                //execute(ent->first, "DELETE", rules);
+				printf("Detected \"DELETE\" event on \"%s\"\n", ent->first.c_str());
                 fileMap.erase(ent);
-            }
+            } else {
+				ent->second.visited = false;
+			}
         }
+		
     }
 }
