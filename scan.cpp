@@ -54,7 +54,7 @@ int recursiveScan(const string root, const umap<string, vector<rule>> & rules,
         }
     } else {
 		debug("failed to open directory");
-		fprintf(stderr, "Error: Failed to open directory\n");
+		log("Error: Failed to open directory named: " << root << endl);
 		exit(EXIT_FAILURE);
 	}
 
@@ -71,7 +71,7 @@ int scan(const string root, int frequency, const umap<string, vector<rule>> & ru
 
     /* Carry out the initial scan */
     log("Carrying out initial scan...");
-    int status = recursiveScan(root, rules, fileMap, true);
+    recursiveScan(root, rules, fileMap, true);
     log("Initial scan completed.")
 
     
@@ -79,22 +79,10 @@ int scan(const string root, int frequency, const umap<string, vector<rule>> & ru
     log("Beginning perodic scan:");
     log("   scanning root directory every " << frequency << " seconds");
     while (true) {
-		usleep(5*1000000);
+		usleep(frequency*1000000);
 		debug("begin of scan");
-        recursiveScan(root, rules, fileMap, false);
-
         
-		/* Detect if there's any deletion */
-		
-        for (auto ent = fileMap.begin(); ent != fileMap.end(); ent++) {
-            if (ent->second.visited == false) {
-                //execute(ent->first, "DELETE", rules);
-				printf("Detected \"DELETE\" event on \"%s\"\n", ent->first.c_str());
-                fileMap.erase(ent);
-            } else {
-				ent->second.visited = false;
-			}
-        }
-		
+        recursiveScan(root, rules, fileMap, false);
+        detectDelete(fileMap, rules);
     }
 }
