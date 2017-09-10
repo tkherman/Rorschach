@@ -23,7 +23,14 @@ umap<string, vector<rule>> loadRules(const string filepath) {
     
     log("Loading rules from file...");
 	
-	ifstream file(filepath);
+    /* Opens file containing rules */
+	ifstream file(filepath, ifstream::in);
+    if (!file.is_open()) {
+        log("Error: Fails to open rule file");
+        exit(EXIT_FAILURE);
+    }
+
+
 	string line; //for reading in file line by line
 	while(getline(file, line)) {
 
