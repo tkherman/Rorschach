@@ -29,7 +29,7 @@ int detect(const string filename, umap<string, fileInfo> & fileMap,
 		
 		log("Detected \"CREATE\" event on \"" << filename << "\"");
 		//exec
-		//execute(filename, "MODIFY", rules);
+		//execute(filename, "CREATE", rules);
 	}
 
 	return EXIT_SUCCESS;
