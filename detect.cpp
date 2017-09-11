@@ -17,8 +17,7 @@ int detect(const string filename, umap<string, fileInfo> & fileMap,
 			fileMap[filename].mtime = modTime;
 			
             log("Detected \"MODIFY\" event on \"" << filename << "\"");
-			//exec
-			//execute(filename, "MODIFY", rules);
+			execute(filename, "MODIFY", rules);
 		}
 		fileMap[filename].visited = true;
     
@@ -28,8 +27,7 @@ int detect(const string filename, umap<string, fileInfo> & fileMap,
 		fileMap[filename] = entry;
 		
 		log("Detected \"CREATE\" event on \"" << filename << "\"");
-		//exec
-		//execute(filename, "CREATE", rules);
+		execute(filename, "CREATE", rules);
 	}
 
 	return EXIT_SUCCESS;
@@ -44,6 +42,7 @@ int detectDelete(umap<string, fileInfo> & fileMap, const umap<string, vector<rul
         if (ent->second.visited == false) {
             //execute(ent->first, "DELETE", rules);
             log("Detected \"DELETE\" event on \"" << ent->first << "\"");
+            execute(ent->first, "DELETE", rules);
             fileMap.erase(ent);
         
         } else {
