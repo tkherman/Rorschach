@@ -133,12 +133,23 @@ Analysis
 >
 >   1. In this specific context, why could this be considered a possible
 >      negative design flaw?
+>       Busy Waiting is not real time so it is not detecting changes the moment
+>       it happens and it may miss some changes. In addition, it is also expensive 
+>       to keep checking if there's changes as opposed to event driven program that 
+>       triggers a function call when there's a change
 >
 >   2. Consider [inotify(7)] provided by [Linux].  How would these system calls
 >      help address the problem of [busy waiting]?
+>       Inotify provides a more real time notification of changes made in a
+>       directory. It would prevent missing some changes which is something that
+>       occurs with file polling which is essentially what rorschach does
 >
 >   3. Why might we still consider using [busy waiting] as specified in the
 >      original design rather than use something like [inotify(7)]?
+>       For starter, busy waiting is probably easier to implement than something
+>       like inotify. In addition, something like inotify must be implemented
+>       within the file system in order for events to trigger some sort of
+>       function.
 
 [Linux]:        https://kernel.org
 [busy waiting]: https://en.wikipedia.org/wiki/Busy_waiting
