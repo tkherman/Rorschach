@@ -5,13 +5,13 @@
 #include <cstdlib>
 #include <cctype>
 #include <cstring>
-
+#include <csignal>
 #include <iostream>
 
 
 /* Functions */
 
-void usage(const string programName, int status) {
+void usage(string programName, int status) {
     cerr << endl;
     cerr << "Usage: " << programName << " [options] ROOT" << endl;
     cerr << endl;
@@ -30,10 +30,18 @@ bool isNumber(char* s) {
     return true;
 }
 
+void signalHandler(int signum) {
+	cout << "\nCleaning up\nBye!\n";
+	exit(EXIT_SUCCESS);
+}
+
 
 /* Main Execution */
 
 int main(int argc, char *argv[]) {
+
+	/* catch SIGINT */
+	signal(SIGINT, signalHandler);
     
     /* Intialize parameters */
     string ruleFile = "rules";

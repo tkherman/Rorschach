@@ -5,8 +5,8 @@
 /* This file is dedicated to detecting if files have been modified, added to
  * or deleted from the directories we are watching. */
 
-int detect(const string filename, umap<string, fileInfo> & fileMap,
- 			const umap<string, vector<rule>> & rules) {
+int detect(string filename, umap<string, fileInfo> & fileMap,
+ 			umap<string, vector<rule>> & rules) {
 	
 	time_t modTime = getMTime(filename);
 	
@@ -34,16 +34,17 @@ int detect(const string filename, umap<string, fileInfo> & fileMap,
 }
 
 
-int detectDelete(umap<string, fileInfo> & fileMap, const umap<string, vector<rule>> & rules) {
+int detectDelete(umap<string, fileInfo> & fileMap, umap<string, vector<rule>> & rules) {
     
     /* Loop through the fileMap and detect unvisited files */
+	vector<string> filesDeleted;
     for (auto ent = fileMap.begin(); ent != fileMap.end(); ent++) {
         
         if (ent->second.visited == false) {
-            //execute(ent->first, "DELETE", rules);
+			debug(&ent << "," << &(*ent));
             log("Detected \"DELETE\" event on \"" << ent->first << "\"");
             execute(ent->first, "DELETE", rules);
-            fileMap.erase(ent);
+			filesDeleted.push_back(ent->first);
         
         } else {
             // Reset visited flag if the entry has been visited
@@ -51,6 +52,10 @@ int detectDelete(umap<string, fileInfo> & fileMap, const umap<string, vector<rul
         }
 
     }
+	/* Loop through files deleted and erase them from fileMap */
+	for(auto ent : filesDeleted) {
+		fileMap.erase(ent);
+	}
 
     return EXIT_SUCCESS;
 }
