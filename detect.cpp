@@ -41,7 +41,6 @@ int detectDelete(umap<string, fileInfo> & fileMap, umap<string, vector<rule>> & 
     for (auto ent = fileMap.begin(); ent != fileMap.end(); ent++) {
         
         if (ent->second.visited == false) {
-			debug(&ent << "," << &(*ent));
             log("Detected \"DELETE\" event on \"" << ent->first << "\"");
             execute(ent->first, "DELETE", rules);
 			filesDeleted.push_back(ent->first);

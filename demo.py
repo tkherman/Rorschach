@@ -149,7 +149,7 @@ Here we go ...
     else:
         positive_cowsay('Looks like the help flag was handled successfully.')
 
-    command = './rorschach -t {}'.format(DEMO_TIMEOUT)
+    command = './rorschach -t {} .'.format(DEMO_TIMEOUT)
     cowsay('Executing `{}` ...'.format(command))
     process = create_process(command)
     if process.returncode is None:
@@ -159,7 +159,7 @@ Here we go ...
         negative_cowsay('Looks like the timeout flag was not handled properly.')
 
     open(DEMO_RULES, 'w')
-    command = './rorschach -f {}'.format(DEMO_RULES)
+    command = './rorschach -f {} .'.format(DEMO_RULES)
     cowsay('Executing `{}` ...'.format(command))
     process = create_process(command)
     if process.returncode is None:

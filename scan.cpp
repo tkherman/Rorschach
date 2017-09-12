@@ -51,7 +51,6 @@ int recursiveScan(string root, umap<string, vector<rule>> & rules,
             }
         }
     } else {
-		debug("failed to open directory");
 		log("Error: Failed to open directory named: " << root << endl);
 		exit(EXIT_FAILURE);
 	}
@@ -74,11 +73,10 @@ int scan(string root, int frequency, umap<string, vector<rule>> & rules) {
 
     
     /* Begin repeating scan perodically */
-    log("Beginning perodic scan:");
+    log("Monitoring \"" << root << "\"");
     log("   scanning root directory every " << frequency << " seconds");
     while (true) {
 		usleep(frequency*1000000);
-		debug("begin of scan");
         
         recursiveScan(root, rules, fileMap, false);
         detectDelete(fileMap, rules);
