@@ -14,7 +14,7 @@
 /* This functions carries out the actual recursive scan, it takes in an additional
  * boolean argument firstScan to differentiate if this is a repeating scan or
  * first scan */
-int recursiveScan(const string root, const umap<string, vector<rule>> & rules, 
+int recursiveScan(string root, umap<string, vector<rule>> & rules, 
                     umap<string, fileInfo> & fileMap, bool firstScan) {
     
     
@@ -64,7 +64,7 @@ int recursiveScan(const string root, const umap<string, vector<rule>> & rules,
 
 
 
-int scan(const string root, int frequency, const umap<string, vector<rule>> & rules) {
+int scan(string root, int frequency, umap<string, vector<rule>> & rules) {
     
     /* Initialize fileMap */
     umap<string, fileInfo> fileMap;

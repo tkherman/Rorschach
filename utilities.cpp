@@ -8,7 +8,7 @@
 #include <cstring>
 
 /* Retrieve the modification time of the given file */
-time_t getMTime(const string filename) {
+time_t getMTime(string filename) {
     struct stat s;
     int status = lstat(filename.c_str(), &s);
     

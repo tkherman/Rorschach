@@ -11,7 +11,7 @@
 
 /* Functions */
 
-void usage(const string programName, int status) {
+void usage(string programName, int status) {
     cerr << endl;
     cerr << "Usage: " << programName << " [options] ROOT" << endl;
     cerr << endl;
