@@ -19,8 +19,10 @@ using namespace std;
 #define streq(s0, s1) (strcmp((s0), (s1)) == 0)
 #define     debug(M) \
     cerr << "[DEBUG] " << __FILE__ << ":" << __LINE__ << ":" << __func__ << ": " << M << endl;
-#define     log(M) \
-    cerr << "[LOG] " << __func__ << ": " << M << endl;
+#define log(M) \
+    cout << M << endl;
+//#define     log(M)
+    //cerr << "[LOG] " << __func__ << ": " << M << endl;
 
 
 /* typedef */

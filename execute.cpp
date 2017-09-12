@@ -30,8 +30,10 @@ string determineAction (string filename, string event, umap<string, vector<rule>
     /* Loop thorugh vector of corresponding event and check if there's matching pattern */
     for (auto it = rules[event].begin(); it != rules[event].end(); it++) {
         if (!fnmatch(it->pattern.c_str(), filename.c_str(), 0) || 
-            !fnmatch(it->pattern.c_str(), basename(filenameC), 0))
+            !fnmatch(it->pattern.c_str(), basename(filenameC), 0)) {
+            log("Matched \"" << it->pattern << "\" on \"" << filename << "\"");
             return it->action;
+        }
     }
 
 	return string();
@@ -49,7 +51,6 @@ int execute(string filename, string event, umap<string, vector<rule>> & rules) {
     
 	/* The filename matches pattern, fork process to execute action */
 	if (!action.empty()) {
-        debug("executing action");
 		pid_t id = fork();
 
         if (id > 0) { // parent process
@@ -77,6 +78,7 @@ int execute(string filename, string event, umap<string, vector<rule>> & rules) {
             
 
             // execute the command
+            log("Executing action \"" << action << "\" on \"" << filename << "\"");
             if (execl("/bin/sh", "sh", "-c", action.c_str(), (char*) 0) < 0)
                     log("Error: unable to exec " << strerror(errno));
 
