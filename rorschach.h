@@ -7,6 +7,7 @@
 #include <vector>
 #include <unordered_map>
 #include <iostream>
+#include <sstream>
 
 #include <cstring>
 using namespace std;
@@ -31,9 +32,9 @@ struct rule {
     string action;
     
     rule() {}
-    rule(string pattern, string action) {
-        this->pattern = pattern;
-        this->action = action;
+    rule(string _pattern, string _action) {
+        this->pattern = _pattern;
+        this->action = _action;
     }
 };
 
@@ -42,9 +43,9 @@ struct fileInfo {
     bool visited;
 
     fileInfo() {}
-    fileInfo(time_t mtime, bool visited) {
-        this->mtime = mtime;
-        this->visited = visited;
+    fileInfo(time_t _mtime, bool _visited) {
+        this->mtime = _mtime;
+        this->visited = _visited;
     }
 };
 

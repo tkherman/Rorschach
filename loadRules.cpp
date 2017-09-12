@@ -55,7 +55,7 @@ umap<string, vector<rule>> loadRules(const string filepath) {
 		}
 		
 
-		/* Fill action while */
+		/* Fill action */
 		string filler;
         if(!(iss >> filler)) {
            log("Error: Invalid rule format");
@@ -66,6 +66,8 @@ umap<string, vector<rule>> loadRules(const string filepath) {
 		
 		// Continue filling the action string (could have spaces, so need loop)
 		while(iss >> filler) action += " " + filler;
+
+
 
 		
         /* Add the rule to map if it is valid */

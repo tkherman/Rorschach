@@ -14,7 +14,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include <stringstream>
+#include <sstream>
 
 
 /* This function determines if an action should be executed based on the rules.
@@ -24,7 +24,7 @@ string determineAction(const string filename, const string event, const umap<str
     
     /* Loop thorugh vector of corresponding event and check if there's matching pattern */
     for (auto it = rules[event].begin(); it != rules[event].end(); it++) {
-        if (!fnmatch(it->pattern.c_str(), filename.c_str()))
+        if (!fnmatch(it->pattern.c_str(), filename.c_str(), FNM_PATHNAME))
             return it->action;
     }
 
@@ -53,12 +53,16 @@ int execute(const string filename, const string event, const umap<string, vector
         } else if (id == 0) { // child process
             
             /* set environment variables */
+            char filenameCStr[filename.size() + 1];
+            size_t length = filename.copy(filenameCStr, filename.size());
+            filenameCStr[length] = '\0';
+
             setenv("FULLPATH", filename.c_str(), 1);
-            setenv("BASEPATH", basename(filename.c_str()), 1);
+            setenv("BASEPATH", filenameCStr, 1);
             setenv("EVENT", event.c_str(), 1);
             
             time_t seconds;
-            time(&seconds)
+            time(&seconds);
             string strTime = to_string(seconds);
             setenv("TIMESTAMP", strTime.c_str(), 1);
             
@@ -75,10 +79,13 @@ int execute(const string filename, const string event, const umap<string, vector
             }
 
             // convert strings into c_strings and put them into a char*[]
-            int execArgc = actionParser.length();
-            char *execArgv[execArgc + 1];
-            for (int i = 0; i < execArgc; i++)
+            int execArgc = actionParser.size();
+            char execArgv[execArgc + 1][256];
+            for (int i = 0; i < execArgc; i++) 
                 execArgv[i] = actionParser[i].c_str();
+            //{
+            //    char buffer
+            //}
 
             execArgv[execArgc] = NULL;
 
