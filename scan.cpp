@@ -5,7 +5,6 @@
 
 #include "rorschach.h"
 
-#include <dirent.h>
 #include <unistd.h>
 #include <cstdlib>
 
@@ -21,6 +20,7 @@ int recursiveScan(string root, umap<string, vector<rule>> & rules,
     /* Open directory */
     struct dirent *dp;
     DIR *dir = opendir(root.c_str());
+	openDirs.insert(dir);
 
 
     /* Loop through contents of the directory, recurse on directories within */
@@ -57,6 +57,7 @@ int recursiveScan(string root, umap<string, vector<rule>> & rules,
 	}
 
 	closedir(dir);
+	openDirs.erase(dir);
 	return 0;
 }
 

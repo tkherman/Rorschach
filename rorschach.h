@@ -7,6 +7,8 @@
 #include <vector>
 #include <unordered_map>
 #include <iostream>
+#include <unordered_set>
+#include <dirent.h>
 
 #include <cstring>
 using namespace std;
@@ -25,6 +27,9 @@ using namespace std;
 template<typename Key, typename Value>
     using umap = unordered_map<Key, Value>;
 
+
+/* global variable for open directories */
+extern unordered_set<DIR *> openDirs;
 
 struct rule {
     string pattern;

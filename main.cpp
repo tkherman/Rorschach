@@ -8,6 +8,8 @@
 #include <csignal>
 #include <iostream>
 
+/* Initialization of extern global variable */
+unordered_set<DIR *> openDirs;
 
 /* Functions */
 
@@ -32,6 +34,11 @@ bool isNumber(char* s) {
 
 void signalHandler(int signum) {
 	cout << "\nCleaning up\nBye!\n";
+
+	//close all open directories
+	for(auto dir : openDirs) {
+		closedir(dir);
+	}
 	exit(EXIT_SUCCESS);
 }
 
