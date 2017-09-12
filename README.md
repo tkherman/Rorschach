@@ -12,6 +12,12 @@ Members
 1. Herman Tong (ktong1@nd.edu)
 2. John McGuinness (jmcguin1@nd.edu)
 
+References
+----------
+
+> The bare structure of this project was inspired by Project 1 from Systems Programming
+> last spring.
+
 Design
 ------
 
@@ -97,12 +103,29 @@ Testing
 > Describe how you tested and verified that `rorschach` met the project
 > requirements.
 
+As we finished each part, we made sure it worked before moving on to the next part.
+We first got scan working, then we got detect working, and finally we got execute to
+work.  We originally tested pattern matching using our own rules file before we used
+the test script.  We had an unfortunate error with using a valid method for removing
+from an STL unordered_map that is not supported with the student machine compilers
+but is supported by both of our newer compilers, so we had to try to fix the segfault
+this caused for a while.  Finally, when we overcame this bug, we had to reconfigure
+our output text to match what the test script was looking for.
+
 Analysis
 --------
 
 > How is what `rorschach` does similar to how a [system call] operates?
 
-.
+> Just like system calls interrupt the normal flow of a program to trigger events,
+> `rorschach` detects changes (which can be considered analagous to the system calls)
+> to a filesystem. The program then acts on these changes based on its list of rules,
+> executing some sort of shell command if the modification type and file pattern
+> matches those specified in the rules before returning ot the normal execution of
+> the file-monitoring program.  This is similar to how a system call switches the
+> program from user mode to kernel mode, waits for something from the OS kernel, and
+> then returns the program back to user mode.
+
 
 > As described in the project requirements, `rorschach` periodically scans the
 > `root` directory to detect changes in files.  This process can be described
@@ -126,6 +149,10 @@ Errata
 ------
 
 > Describe any known errors, bugs, or deviations from the requirements.
+
+> We are currently not passing the memory test, but we believe this is due to the way
+> that valgrind works with strings and unordered_maps on the older student machines.
+> On student04, there are no memory errors reported by valgrind.
 
 Extra Credit
 ------------
