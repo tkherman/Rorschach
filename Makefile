@@ -32,10 +32,9 @@ detect.o: detect.cpp rorschach.h
 	@echo Compiling detect.o...
 	@$(CC) $(CFLAGS) -o $@ -c $<
 
-execute.o: execute.cpp rorschach.h
+execute.o: execute.cpp rorschach/h
 	@echo Compiling execute.o...
 	@$(CC) $(CFLAGS) -o $@ -c $<
-
 
 clean:
 	@echo Cleaning...
