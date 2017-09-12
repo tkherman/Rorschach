@@ -31,7 +31,6 @@ int recursiveScan(string root, umap<string, vector<rule>> & rules,
 
             
             string filename = root + "/" + string(dp->d_name);
-            //debug(filename);
 
             /* If it's first scan, simply add filename to umap */
             if (firstScan) {
@@ -46,7 +45,6 @@ int recursiveScan(string root, umap<string, vector<rule>> & rules,
             } else {
                 if (dp->d_type == DT_DIR) {
                     recursiveScan(filename, rules, fileMap, false);
-                //log("Scanning");
 				}else {
                     detect(filename, fileMap, rules);
                 }

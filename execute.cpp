@@ -38,6 +38,7 @@ string determineAction (string filename, string event, umap<string, vector<rule>
  * should be execute according to the filename, event, and rules. If so, fork a
  * process to execute the action. */
 int execute(string filename, string event, umap<string, vector<rule>> & rules) {
+	return 0;
     
     string action = determineAction(filename, event, rules);
     
