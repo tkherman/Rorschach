@@ -17,7 +17,7 @@ int detect(string filename, umap<string, fileInfo> & fileMap,
 			fileMap[filename].mtime = modTime;
 			
             log("Detected \"MODIFY\" event on \"" << filename << "\"");
-			//execute(filename, "MODIFY", rules);
+			execute(filename, "MODIFY", rules);
 		}
 		fileMap[filename].visited = true;
     
@@ -27,7 +27,7 @@ int detect(string filename, umap<string, fileInfo> & fileMap,
 		fileMap[filename] = entry;
 		
 		log("Detected \"CREATE\" event on \"" << filename << "\"");
-		//execute(filename, "CREATE", rules);
+		execute(filename, "CREATE", rules);
 	}
 
 	return EXIT_SUCCESS;
@@ -37,13 +37,14 @@ int detect(string filename, umap<string, fileInfo> & fileMap,
 int detectDelete(umap<string, fileInfo> & fileMap, umap<string, vector<rule>> & rules) {
     
     /* Loop through the fileMap and detect unvisited files */
+	vector<string> filesDeleted;
     for (auto ent = fileMap.begin(); ent != fileMap.end(); ent++) {
         
         if (ent->second.visited == false) {
 			debug(&ent << "," << &(*ent));
             log("Detected \"DELETE\" event on \"" << ent->first << "\"");
-            //execute(ent->first, "DELETE", rules);
-            fileMap.erase(ent);
+            execute(ent->first, "DELETE", rules);
+			filesDeleted.push_back(ent->first);
         
         } else {
             // Reset visited flag if the entry has been visited
@@ -51,6 +52,10 @@ int detectDelete(umap<string, fileInfo> & fileMap, umap<string, vector<rule>> & 
         }
 
     }
+	/* Loop through files deleted and erase them from fileMap */
+	for(auto ent : filesDeleted) {
+		fileMap.erase(ent);
+	}
 
     return EXIT_SUCCESS;
 }

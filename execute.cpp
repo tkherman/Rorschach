@@ -25,7 +25,7 @@ string determineAction (string filename, string event, umap<string, vector<rule>
     
     /* Loop thorugh vector of corresponding event and check if there's matching pattern */
     for (auto it = rules[event].begin(); it != rules[event].end(); it++) {
-        if (!fnmatch(it->pattern.c_str(), filename.c_str(), FNM_PATHNAME))
+        if (!fnmatch(it->pattern.c_str(), filename.c_str(), 0))
             return it->action;
     }
 
@@ -38,14 +38,14 @@ string determineAction (string filename, string event, umap<string, vector<rule>
  * should be execute according to the filename, event, and rules. If so, fork a
  * process to execute the action. */
 int execute(string filename, string event, umap<string, vector<rule>> & rules) {
-	return 0;
     
     string action = determineAction(filename, event, rules);
     
     
 	/* The filename matches pattern, fork process to execute action */
 	if (!action.empty()) {
-        pid_t id = fork();
+        debug("executing action");
+		pid_t id = fork();
 
         if (id > 0) { // parent process
             int status;
@@ -70,6 +70,7 @@ int execute(string filename, string event, umap<string, vector<rule>> & rules) {
             string strTime = to_string(seconds);
             setenv("TIMESTAMP", strTime.c_str(), 1);
             
+			/*
             // Parse the action command into a char*[] from string
             stringstream ssin(action);
             vector<string> actionParser;
@@ -95,8 +96,12 @@ int execute(string filename, string event, umap<string, vector<rule>> & rules) {
 
             execArgv[execArgc] = NULL;
 
+			for (int i = 0; i < execArgc; i++) {
+				debug(execArgv[i]);
+			}*/
+
             // execute the command
-            if (execvp(execArgv[0], execArgv) < 0)
+            if (execl("/bin/sh", "sh", "-c", action.c_str(), (char*) 0) < 0)
                     log("Error: unable to exec " << strerror(errno));
 
             _exit(EXIT_FAILURE);
