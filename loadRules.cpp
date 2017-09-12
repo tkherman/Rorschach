@@ -21,7 +21,7 @@ umap<string, vector<rule>> loadRules(string filepath) {
     ruleMap["MODIFY"] = vector<rule> ();
     ruleMap["DELETE"] = vector<rule> ();
     
-    log("Loading rules from file...");
+    //log("Loading rules from file...");
 	
     /* Opens file containing rules */
 	ifstream file(filepath, ifstream::in);
@@ -81,7 +81,7 @@ umap<string, vector<rule>> loadRules(string filepath) {
 		
 	}
     
-    log("Rules are successfully parsed and loaded from file");
+    //log("Rules are successfully parsed and loaded from file");
 
 	return ruleMap;
 }

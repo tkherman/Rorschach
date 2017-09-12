@@ -23,9 +23,14 @@
  * else, the function returns an empty string */
 string determineAction (string filename, string event, umap<string, vector<rule>> & rules)  {
     
+    char filenameC[filename.size()+1];
+    size_t length = filename.copy(filenameC, filename.size());
+    filenameC[length] = '\0';
+
     /* Loop thorugh vector of corresponding event and check if there's matching pattern */
     for (auto it = rules[event].begin(); it != rules[event].end(); it++) {
-        if (!fnmatch(it->pattern.c_str(), filename.c_str(), 0))
+        if (!fnmatch(it->pattern.c_str(), filename.c_str(), 0) || 
+            !fnmatch(it->pattern.c_str(), basename(filenameC), 0))
             return it->action;
     }
 
@@ -70,35 +75,6 @@ int execute(string filename, string event, umap<string, vector<rule>> & rules) {
             string strTime = to_string(seconds);
             setenv("TIMESTAMP", strTime.c_str(), 1);
             
-			/*
-            // Parse the action command into a char*[] from string
-            stringstream ssin(action);
-            vector<string> actionParser;
-            string temp;
-            
-            // split string by space and put them into a vector
-            ssin >> temp;
-            while (!ssin.eof()) {
-                actionParser.push_back(temp);
-                ssin>> temp;
-            }
-
-            // convert strings into c_strings and put them into a char*[]
-            int execArgc = actionParser.size();
-            char *execArgv[execArgc + 1];
-            for (int i = 0; i < execArgc; i++) {
-                // manually create non-const c string (char *)
-				char buffer[actionParser[i].size()+1];
-				size_t length = actionParser[i].copy(buffer, actionParser[i].size());
-				buffer[length] = '\0';
-                execArgv[i] = buffer;
-			}
-
-            execArgv[execArgc] = NULL;
-
-			for (int i = 0; i < execArgc; i++) {
-				debug(execArgv[i]);
-			}*/
 
             // execute the command
             if (execl("/bin/sh", "sh", "-c", action.c_str(), (char*) 0) < 0)

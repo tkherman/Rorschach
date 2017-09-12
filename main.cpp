@@ -42,6 +42,7 @@ int main(int argc, char *argv[]) {
 
 	/* catch SIGINT */
 	signal(SIGINT, signalHandler);
+	signal(SIGTERM, signalHandler);
     
     /* Intialize parameters */
     string ruleFile = "rules";
