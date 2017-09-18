@@ -168,7 +168,13 @@ Errata
 Extra Credit
 ------------
 
-> Describe what extra credit (if any) that you implemented.
+> Once we finished, we went on to add concurrency to our program by using a
+> pipeline.  This works by creating the pipe in main, then forking to create
+> a child process.  The parent process scans the files while the child executes
+> necessary actions depending on events.  We pass a string through the pipe
+> containing one character specifying the modification type, the filename
+> changed, and a newline character to specify that we are done processing.
+> The execution function parses this and then behaves exactly as it did before.
 
 Grader
 ------
