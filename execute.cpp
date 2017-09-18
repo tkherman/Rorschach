@@ -91,7 +91,6 @@ int executePipe(umap<string, vector<rule>> &rules) {
 			if(readbuf == '\n') break;
 			fname += readbuf;
 		}
-		cout << fname << endl;
 		switch(buf) {
 			case 'C':
 				execute(fname, "CREATE", rules);

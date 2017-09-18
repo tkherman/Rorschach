@@ -120,7 +120,7 @@ int main(int argc, char *argv[]) {
 
     /* Parse rules file and begin scanning */
 	
-	umap<string, vector<rule>> rules = loadRules("./rules");
+	umap<string, vector<rule>> rules = loadRules(ruleFile);
 
 
 	/* Pipe */
