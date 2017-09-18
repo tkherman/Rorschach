@@ -8,8 +8,9 @@
 #include <csignal>
 #include <iostream>
 
-/* Initialization of extern global variable */
+/* Initialization of extern global variables */
 unordered_set<DIR *> openDirs;
+int pipefd[2];
 
 /* Functions */
 
@@ -39,6 +40,9 @@ void signalHandler(int signum) {
 	for(auto dir : openDirs) {
 		closedir(dir);
 	}
+	//close the pipe
+	close(pipefd[0]);
+	close(pipefd[1]);
 	exit(EXIT_SUCCESS);
 }
 
@@ -115,9 +119,31 @@ int main(int argc, char *argv[]) {
 
 
     /* Parse rules file and begin scanning */
+	
+	umap<string, vector<rule>> rules = loadRules("./rules");
 
-    umap<string, vector<rule>> rules = loadRules(ruleFile);
 
-    scan(root, frequency, rules);
+	/* Pipe */
+	pid_t child_pid;
+
+	if (pipe(pipefd) == -1) {
+		perror("pipe");
+		exit(EXIT_FAILURE);
+	}
+	if((child_pid = fork()) == -1) {
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+
+	if (child_pid == 0) { //child
+		close(pipefd[1]);
+		executePipe(rules);
+
+	} else { //parent
+		close(pipefd[0]);
+		scan(root, frequency, rules);
+		wait(NULL);
+	}
+    
     
 }

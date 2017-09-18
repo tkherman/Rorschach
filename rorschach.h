@@ -9,6 +9,17 @@
 #include <iostream>
 #include <unordered_set>
 #include <dirent.h>
+#include <ctime>
+#include <unistd.h>
+#include <libgen.h>
+#include <fnmatch.h>
+#include <string.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <libgen.h>
+
+#include <sstream>
 
 #include <cstring>
 using namespace std;
@@ -30,8 +41,9 @@ template<typename Key, typename Value>
     using umap = unordered_map<Key, Value>;
 
 
-/* global variable for open directories */
+/* global variables for open directories and pipefd*/
 extern unordered_set<DIR *> openDirs;
+extern int pipefd[2];
 
 struct rule {
     string pattern;
@@ -60,6 +72,7 @@ time_t getMTime(const string filename);
 int detect(string filename, umap<string, fileInfo> & fileMap,
            umap<string, vector<rule>> & rules);
 int detectDelete(umap<string, fileInfo> & fileMap, umap<string, vector<rule>> & rules);
+int executePipe(umap<string, vector<rule>> & rules);
 int execute(string filename, string event, umap<string, vector<rule>> & rules);
 umap<string, vector<rule>> loadRules(string ruleFile);
 void signalHandler(int sig);

@@ -5,17 +5,6 @@
 
 #include "rorschach.h"
 
-#include <ctime>
-#include <unistd.h>
-#include <libgen.h>
-#include <fnmatch.h>
-#include <string.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <libgen.h>
-
-#include <sstream>
 
 
 /* This function determines if an action should be executed based on the rules.
@@ -44,7 +33,7 @@ string determineAction (string filename, string event, umap<string, vector<rule>
 /* This function take in a filename, a event and rules then determine if an action
  * should be execute according to the filename, event, and rules. If so, fork a
  * process to execute the action. */
-int execute(string filename, string event, umap<string, vector<rule>> & rules) {
+int execute(string filename, string event, umap<string, vector<rule>> &rules) {
     
     string action = determineAction(filename, event, rules);
     
@@ -91,4 +80,31 @@ int execute(string filename, string event, umap<string, vector<rule>> & rules) {
     }
 
     return EXIT_SUCCESS;
+}
+
+int executePipe(umap<string, vector<rule>> &rules) {
+	char buf;
+	while(read(pipefd[0], &buf, 1) > 0) {
+		string fname = "";
+		char readbuf;
+		while(read(pipefd[0], &readbuf, 1)) {
+			if(readbuf == '\n') break;
+			fname += readbuf;
+		}
+		cout << fname << endl;
+		switch(buf) {
+			case 'C':
+				execute(fname, "CREATE", rules);
+				break;
+			case 'M':
+				execute(fname, "MODIFY", rules);
+				break;
+			case 'D':
+				execute(fname, "DELETE", rules);
+				break;
+			default:
+				return EXIT_FAILURE;
+		}
+	}
+	return EXIT_SUCCESS;
 }
